@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cuernavaca — Ciudad de la Eterna Primavera</title>
-<meta name="description" content="Descubre las haciendas históricas, balnearios naturales y museos culturales de Cuernavaca, Morelos. La Ciudad de la Eterna Primavera te espera.">
+<title>Morelos — Ciudad de la Eterna Primavera</title>
+<meta name="description" content="Descubre las haciendas históricas, balnearios naturales y museos culturales de Morelos, Morelos. La Ciudad de la Eterna Primavera te espera.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -636,13 +636,156 @@ footer {
   .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
   #navbar.scrolled { padding: 0.7rem 1.5rem; }
 }
+
+/* ═══════════════════ MODAL GALERÍA ═══════════════════ */
+#gallery-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(10, 6, 2, 0.95);
+  backdrop-filter: blur(12px);
+  overflow-y: auto;
+}
+#gallery-modal.open { display: flex; align-items: flex-start; justify-content: center; }
+.modal-inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+  animation: fadeUp 0.5s ease forwards;
+}
+.modal-close {
+  position: fixed;
+  top: 1.5rem; right: 2rem;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 2100;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s;
+}
+.modal-close:hover { background: var(--gold); color: var(--dark); }
+.modal-header {
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: 2rem;
+}
+.modal-tag {
+  font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.6rem; display: block;
+}
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700; color: var(--cream);
+  line-height: 1.1;
+}
+.modal-loc {
+  font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem;
+}
+
+/* Main image */
+.modal-main-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid var(--glass-border);
+  margin-bottom: 1rem;
+  background: var(--dark2);
+}
+.modal-main-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+.modal-img-nav {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  background: rgba(26,18,8,0.7);
+  border: 1px solid var(--glass-border);
+  color: var(--gold);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s;
+  z-index: 10;
+}
+.modal-img-nav:hover { background: var(--gold); color: var(--dark); }
+.modal-img-nav.prev { left: 1rem; }
+.modal-img-nav.next { right: 1rem; }
+.modal-img-counter {
+  position: absolute;
+  bottom: 1rem; right: 1rem;
+  background: rgba(26,18,8,0.75);
+  border: 1px solid var(--glass-border);
+  color: var(--cream);
+  font-size: 0.78rem; letter-spacing: 0.1em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+}
+
+/* Thumbnails */
+.modal-thumbs {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.modal-thumb {
+  width: 80px; height: 60px;
+  object-fit: cover;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+.modal-thumb.active { border-color: var(--gold); opacity: 1; }
+.modal-thumb:hover { opacity: 0.9; }
+
+/* Texto por imagen */
+.modal-img-text-section {
+  background: var(--dark2);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  padding: 1.8rem 2rem;
+}
+.modal-img-label {
+  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.8rem; display: block;
+}
+.modal-img-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 300; line-height: 1.8;
+  color: var(--cream);
+  min-height: 3.5rem;
+  transition: opacity 0.35s ease;
+}
+.modal-img-text.fade { opacity: 0; }
+
+@media (max-width: 768px) {
+  .modal-inner { margin: 0; padding: 0 1rem 3rem; }
+  .modal-thumb { width: 60px; height: 45px; }
+  .modal-main-img-wrap { aspect-ratio: 4/3; }
+  .modal-img-text-section { padding: 1.2rem; }
+}
 </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav id="navbar">
-  <a class="nav-logo" href="#">✦ CUERNAVACA</a>
+  <a class="nav-logo" href="#">✦ Morelos</a>
   <ul class="nav-links">
     <li><a href="#haciendas">Haciendas</a></li>
     <li><a href="#balnearios">Balnearios</a></li>
@@ -654,7 +797,7 @@ footer {
 <!-- INTRO OVERLAY -->
 <div id="intro-overlay">
   <p class="intro-tag">✦ Morelos · México · Eterna Primavera ✦</p>
-  <h1 class="intro-title">CUERNA<span>VACA</span></h1>
+  <h1 class="intro-title">Morelos<span></span></h1>
   <div class="intro-line"></div>
   <p class="intro-sub">Descubre sus haciendas históricas, balnearios naturales<br>y museos culturales más impresionantes</p>
   <div class="intro-cta-wrap">
@@ -725,7 +868,12 @@ footer {
                 <p class="h-card-desc">Antigua hacienda azucarera del siglo XVI convertida en hotel 5 estrellas. Un refugio de elegancia con spa, jardines tropicales y gastronomía excepcional.</p>
                 <div class="h-card-footer">
                     <span class="h-card-loc">📍 Xochitepec, Morelos</span>
-                    <button class="h-card-btn">Ver más →</button>
+                    <button class="h-card-btn ver-mas-btn"
+                      data-name="Fiesta Americana San Antonio El Puente"
+                      data-tag="Resort & Spa de Lujo · Siglo XVI"
+                      data-loc="📍 Xochitepec, Morelos"
+                      data-folder="img/Haciendas/Fiesta Americana Hacienda San Antonio El Puente Resort & Spa"
+                      data-count="5">Ver más →</button>
                 </div>
             </div>
         </div>
@@ -742,7 +890,12 @@ footer {
                 <p class="h-card-desc">Hotel boutique en una hacienda colonial rodeada de jardines exuberantes. Arquitectura histórica perfectamente restaurada en Amacuzac, Morelos.</p>
                 <div class="h-card-footer">
                     <span class="h-card-loc">📍 Amacuzac, Morelos</span>
-                    <button class="h-card-btn">Ver más →</button>
+                    <button class="h-card-btn ver-mas-btn"
+                      data-name="Hacienda San Gabriel de las Palmas"
+                      data-tag="Joya Colonial · Amacuzac"
+                      data-loc="📍 Amacuzac, Morelos"
+                      data-folder="img/Haciendas/Hacienda San Gabriel de las Palmas"
+                      data-count="5">Ver más →</button>
                 </div>
             </div>
         </div>
@@ -759,7 +912,12 @@ footer {
                 <p class="h-card-desc">Construcción vinculada a Hernán Cortés, convertida en complejo turístico de primer nivel. Historia viva en cada rincón de Jiutepec.</p>
                 <div class="h-card-footer">
                     <span class="h-card-loc">📍 Jiutepec, Morelos</span>
-                    <button class="h-card-btn">Ver más →</button>
+                    <button class="h-card-btn ver-mas-btn"
+                      data-name="Hacienda de Cortés"
+                      data-tag="Legado Histórico · Siglo XVI"
+                      data-loc="📍 Jiutepec, Morelos"
+                      data-folder="img/Haciendas/Hacienda de Cortés"
+                      data-count="6">Ver más →</button>
                 </div>
             </div>
         </div>
@@ -776,7 +934,12 @@ footer {
                 <p class="h-card-desc">Impresionante hacienda con panoramas inigualables, jardines tropicales y arquitectura colonial perfectamente restaurada.</p>
                 <div class="h-card-footer">
                     <span class="h-card-loc">📍 Puente de Ixtla, Morelos</span>
-                    <button class="h-card-btn">Ver más →</button>
+                    <button class="h-card-btn ver-mas-btn"
+                      data-name="Hotel Hacienda Vista Hermosa"
+                      data-tag="Vistas Panorámicas"
+                      data-loc="📍 Puente de Ixtla, Morelos"
+                      data-folder="img/Haciendas/Hotel Hacienda Vista Hermosa"
+                      data-count="6">Ver más →</button>
                 </div>
             </div>
         </div>
@@ -793,7 +956,12 @@ footer {
                 <p class="h-card-desc">Antigua hacienda colonial convertida en destino turístico icónico. Una combinación perfecta de historia y diversión acuática.</p>
                 <div class="h-card-footer">
                     <span class="h-card-loc">📍 Temixco, Morelos</span>
-                    <button class="h-card-btn">Ver más →</button>
+                    <button class="h-card-btn ver-mas-btn"
+                      data-name="Ex Hacienda de Temixco"
+                      data-tag="Historia & Aventura"
+                      data-loc="📍 Temixco, Morelos"
+                      data-folder="img/Haciendas/Ex Hacienda de Temixco"
+                      data-count="5">Ver más →</button>
                 </div>
             </div>
         </div>
@@ -809,8 +977,13 @@ footer {
                 <h3 class="h-card-name">Hacienda Amanalco</h3>
                 <p class="h-card-desc">Majestuosa hacienda histórica con amplios jardines y arquitectura colonial, ideal para eventos memorables y recorridos culturales.</p>
                 <div class="h-card-footer">
-                    <span class="h-card-loc">📍 Amatitlán, Cuernavaca</span>
-                    <button class="h-card-btn">Ver más →</button>
+                    <span class="h-card-loc">📍 Amatitlán, Morelos</span>
+                    <button class="h-card-btn ver-mas-btn"
+                      data-name="Hacienda Amanalco"
+                      data-tag="Eventos & Cultura"
+                      data-loc="📍 Amatitlán, Morelos"
+                      data-folder="img/Haciendas/Hacienda Amanalco S.A. de C.V"
+                      data-count="5">Ver más →</button>
                 </div>
             </div>
         </div>
@@ -841,6 +1014,12 @@ footer {
                     <div class="b-info-item">💰 $300-450 MXN</div>
                     <div class="b-info-item">📍 Tlaltizapán, Morelos</div>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="Las Estacas"
+                  data-tag="Reserva Natural · Cristalinas"
+                  data-loc="📍 Tlaltizapán, Morelos"
+                  data-folder="img/Balnearios/Las Estacas"
+                  data-count="5">Ver más →</button>
             </div>
         </div>
         <div class="b-card reveal-card" data-idx="1">
@@ -857,6 +1036,12 @@ footer {
                     <div class="b-info-item">💰 ~$380 MXN adultos</div>
                     <div class="b-info-item">📍 Temixco, Morelos</div>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="Ex Hacienda de Temixco Waterpark"
+                  data-tag="Aventura Acuática"
+                  data-loc="📍 Temixco, Morelos"
+                  data-folder="img/Balnearios/Ex Hacienda de Temixco Waterpark"
+                  data-count="4">Ver más →</button>
             </div>
         </div>
         <div class="b-card reveal-card" data-idx="2">
@@ -873,6 +1058,12 @@ footer {
                     <div class="b-info-item">💰 $180-300 MXN</div>
                     <div class="b-info-item">📍 Carretera Federal 95</div>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="Paraíso Aventura Las Huertas"
+                  data-tag="Manantiales Naturales"
+                  data-loc="📍 Carretera Federal 95"
+                  data-folder="img/Balnearios/Paraíso Aventura Las Huertas"
+                  data-count="5">Ver más →</button>
             </div>
         </div>
         <div class="b-card reveal-card" data-idx="3">
@@ -889,6 +1080,12 @@ footer {
                     <div class="b-info-item">💰 $250-350 MXN</div>
                     <div class="b-info-item">📍 Jiutepec, Morelos</div>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="El Rollo Parque Acuático"
+                  data-tag="Diversión Extrema"
+                  data-loc="📍 Jiutepec, Morelos"
+                  data-folder="img/Balnearios/El Rollo Parque Acuático"
+                  data-count="5">Ver más →</button>
             </div>
         </div>
         <div class="b-card reveal-card" data-idx="4">
@@ -905,6 +1102,12 @@ footer {
                     <div class="b-info-item">💰 $120-200 MXN</div>
                     <div class="b-info-item">📍 Acatlipa, Temixco</div>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="Aquatic Park Water Eye"
+                  data-tag="Toboganes & Olas"
+                  data-loc="📍 Acatlipa, Temixco"
+                  data-folder="img/Balnearios/AQUATIC PARK WATER EYE TEMIXCO"
+                  data-count="5">Ver más →</button>
             </div>
         </div>
   </div>
@@ -915,7 +1118,7 @@ footer {
   <div class="section-intro">
     <span class="section-tag">✦ Cultura & Arte</span>
     <h2 class="section-title">Museos <em>Culturales</em></h2>
-    <p class="section-desc">Desde arte internacional hasta arqueología prehispánica, los museos de Cuernavaca son ventanas al alma de Morelos y México.</p>
+    <p class="section-desc">Desde arte internacional hasta arqueología prehispánica, los museos de Morelos son ventanas al alma de Morelos y México.</p>
     <div class="section-line"></div>
   </div>
   <div class="m-grid">
@@ -935,6 +1138,12 @@ footer {
                     <span>💰 $100-120 MXN</span>
                     <span>📍 Netzahualcóyotl 4, Centro</span>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="Museo Robert Brady"
+                  data-tag="Arte Internacional · +1000 piezas"
+                  data-loc="📍 Netzahualcóyotl 4, Centro"
+                  data-folder="img/Museos/Robert Brady Museum"
+                  data-count="5">Ver más →</button>
             </div>
         </div>
         <div class="m-card reveal-card" data-idx="1">
@@ -952,6 +1161,12 @@ footer {
                     <span>💰 Gratuita</span>
                     <span>📍 Miguel Hidalgo 239, Centro</span>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="MMAPO Arte Popular Morelense"
+                  data-tag="Artesanía Tradicional"
+                  data-loc="📍 Miguel Hidalgo 239, Centro"
+                  data-folder="img/Museos/MMAPO Morelense Folk Art Museum"
+                  data-count="5">Ver más →</button>
             </div>
         </div>
         <div class="m-card reveal-card" data-idx="2">
@@ -969,6 +1184,12 @@ footer {
                     <span>💰 Gratuita</span>
                     <span>📍 Interior Catedral</span>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="Museo de Arte Sacro"
+                  data-tag="Tesoros Religiosos"
+                  data-loc="📍 Interior Catedral"
+                  data-folder="img/Museos/Museo de Arte Sacro"
+                  data-count="6">Ver más →</button>
             </div>
         </div>
         <div class="m-card reveal-card" data-idx="3">
@@ -980,12 +1201,18 @@ footer {
             <div class="m-body">
                 <span class="m-sub">Edificio Colonial · Siglo XVI</span>
                 <h3 class="m-name">Museo de la Ciudad</h3>
-                <p class="m-desc">Museo en edificio colonial del siglo XVI con fascinantes exposiciones temporales sobre historia y cultura de Cuernavaca.</p>
+                <p class="m-desc">Museo en edificio colonial del siglo XVI con fascinantes exposiciones temporales sobre historia y cultura de Morelos.</p>
                 <div class="m-meta">
                     <span>⏰ Mar-Vie 10-17 / Sáb-Dom 10-15</span>
                     <span>💰 Gratuita</span>
                     <span>📍 Av. Morelos Norte 265</span>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="Museo de la Ciudad"
+                  data-tag="Edificio Colonial · Siglo XVI"
+                  data-loc="📍 Av. Morelos Norte 265"
+                  data-folder="img/Museos/Museo de la Ciudad de Cuernavaca"
+                  data-count="6">Ver más →</button>
             </div>
         </div>
         <div class="m-card reveal-card" data-idx="4">
@@ -1003,6 +1230,12 @@ footer {
                     <span>💰 ~$95 MXN</span>
                     <span>📍 Palacio de Cortés</span>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="Museo Regional de los Pueblos de Morelos"
+                  data-tag="Palacio de Cortés"
+                  data-loc="📍 Palacio de Cortés"
+                  data-folder="img/Museos/Museo Universitario de Arte Indígena Contemporáneo, Cuernavaca"
+                  data-count="5">Ver más →</button>
             </div>
         </div>
         <div class="m-card reveal-card" data-idx="5">
@@ -1014,12 +1247,18 @@ footer {
             <div class="m-body">
                 <span class="m-sub">Arte Contemporáneo</span>
                 <h3 class="m-name">Museo Cassa Gaia</h3>
-                <p class="m-desc">Espacio cultural vanguardista dedicado al arte contemporáneo en un hermoso entorno arquitectónico en el corazón de Cuernavaca.</p>
+                <p class="m-desc">Espacio cultural vanguardista dedicado al arte contemporáneo en un hermoso entorno arquitectónico en el corazón de Morelos.</p>
                 <div class="m-meta">
                     <span>⏰ Mar-Dom 10-17</span>
                     <span>💰 Consultar</span>
-                    <span>📍 Centro, Cuernavaca</span>
+                    <span>📍 Centro, Morelos</span>
                 </div>
+                <button class="h-card-btn ver-mas-btn" style="margin-top:1rem"
+                  data-name="Museo Cassa Gaia"
+                  data-tag="Arte Contemporáneo"
+                  data-loc="📍 Centro, Morelos"
+                  data-folder="img/Museos/Museo Cassa Gaia"
+                  data-count="6">Ver más →</button>
             </div>
         </div>
   </div>
@@ -1031,11 +1270,11 @@ footer {
     <div class="mapa-text">
       <span class="section-tag">✦ Ubicación</span>
       <h2 class="section-title">A solo <em>90 min</em> de la CDMX</h2>
-      <p class="section-desc">Cuernavaca, la Ciudad de la Eterna Primavera, es el escape perfecto desde la capital. A tan solo 90 minutos de la Ciudad de México, con clima privilegiado los 365 días del año.</p>
+      <p class="section-desc">Morelos, la Ciudad de la Eterna Primavera, es el escape perfecto desde la capital. A tan solo 90 minutos de la Ciudad de México, con clima privilegiado los 365 días del año.</p>
       <div class="section-line"></div>
     </div>
     <div class="mapa-embed">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120932.9!2d-99.2674!3d18.9242!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce8a3a3de4cba9%3A0x6b7c0e3f7d8c1a2e!2sCuernavaca%2C%20Morelos!5e0!3m2!1ses!2smx!4v1"
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120932.9!2d-99.2674!3d18.9242!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce8a3a3de4cba9%3A0x6b7c0e3f7d8c1a2e!2sMorelos%2C%20Morelos!5e0!3m2!1ses!2smx!4v1"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" frameborder="0"></iframe>
     </div>
   </div>
@@ -1061,12 +1300,12 @@ footer {
         <div class="testi-origin">Guadalajara, Jalisco</div>
       </div>
       <div class="testi-item">
-        <p class="testi-quote">La Hacienda San Gabriel de las Palmas nos dejó sin palabras. La arquitectura colonial, los jardines, la gastronomía... Cuernavaca tiene magia propia que ningún otro lugar de México tiene.</p>
+        <p class="testi-quote">La Hacienda San Gabriel de las Palmas nos dejó sin palabras. La arquitectura colonial, los jardines, la gastronomía... Morelos tiene magia propia que ningún otro lugar de México tiene.</p>
         <div class="testi-author">Ana Lucía Torres</div>
         <div class="testi-origin">Monterrey, Nuevo León</div>
       </div>
       <div class="testi-item">
-        <p class="testi-quote">El clima de Cuernavaca es extraordinario. Llegamos en enero y usamos camiseta todo el día. Las haciendas coloniales y los museos son extraordinarios. ¡Ya queremos regresar!</p>
+        <p class="testi-quote">El clima de Morelos es extraordinario. Llegamos en enero y usamos camiseta todo el día. Las haciendas coloniales y los museos son extraordinarios. ¡Ya queremos regresar!</p>
         <div class="testi-author">Roberto y Elena García</div>
         <div class="testi-origin">Puebla, México</div>
       </div>
@@ -1084,7 +1323,7 @@ footer {
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a class="nav-logo" href="#">✦ CUERNAVACA</a>
+      <a class="nav-logo" href="#">✦ Morelos</a>
       <p>La Ciudad de la Eterna Primavera. Haciendas históricas, balnearios naturales y museos culturales en el corazón de Morelos, México.</p>
       <div class="footer-social">
         <a href="#" title="Facebook">f</a>
@@ -1116,19 +1355,22 @@ footer {
       <ul>
         <li><a href="#">Secretaría de Turismo</a></li>
         <li><a href="#">Guías Locales</a></li>
-        <li><a href="#">info@cuernavaca.gob.mx</a></li>
+        <li><a href="#">info@Morelos.gob.mx</a></li>
         <li><a href="#">+52 777 318 0000</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Cuernavaca Turismo · Morelos, México. Todos los derechos reservados.</p>
+    <p>© 2025 Morelos Turismo · Morelos, México. Todos los derechos reservados.</p>
     <p>Hecho con ♥ para la Ciudad de la Eterna Primavera</p>
   </div>
 </footer>
 
 <!-- FAB -->
-
+<div class="fab-wrap">
+  <a href="https://wa.me/527771000000?text=Hola!%20Quiero%20información%20sobre%20Morelos" target="_blank" class="fab-wa" title="WhatsApp">💬</a>
+  <button class="fab-top" id="fab-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+</div>
 
 <script>
 // ── ANIMATION FRAMES ──
@@ -1288,5 +1530,277 @@ function goTesti(idx) {
 dots.forEach(d => d.addEventListener('click', () => goTesti(+d.dataset.idx)));
 setInterval(() => goTesti((testiIdx + 1) % 4), 5000);
 </script>
+<!-- MODAL GALERÍA -->
+<div id="gallery-modal" role="dialog" aria-modal="true">
+  <button class="modal-close" id="modal-close-btn" aria-label="Cerrar">✕</button>
+  <div class="modal-inner">
+    <div class="modal-header">
+      <span class="modal-tag" id="modal-tag"></span>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <p class="modal-loc" id="modal-loc"></p>
+    </div>
+    <div class="modal-main-img-wrap">
+      <img class="modal-main-img" id="modal-main-img" src="" alt="">
+      <button class="modal-img-nav prev" id="modal-prev">‹</button>
+      <button class="modal-img-nav next" id="modal-next">›</button>
+      <span class="modal-img-counter" id="modal-counter">1 / 5</span>
+    </div>
+    <div class="modal-thumbs" id="modal-thumbs"></div>
+    <div class="modal-img-text-section">
+      <span class="modal-img-label">✦ Descripción de la imagen</span>
+      <p class="modal-img-text" id="modal-img-text">Texto descriptivo de esta imagen. Puedes personalizar cada texto por imagen.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── MODAL GALERÍA ──
+(function() {
+  // Datos de textos por imagen: folder -> [texto img1, texto img2, ...]
+  // Personaliza estos textos como quieras
+  const TEXTOS = {
+    "img/Haciendas/Fiesta Americana Hacienda San Antonio El Puente Resort & Spa": [
+      "Vista exterior de la majestuosa hacienda azucarera del siglo XVI, convertida en uno de los resorts más lujosos de Morelos.",
+      "Los amplios jardines tropicales rodean las instalaciones, creando un ambiente de descanso y elegancia incomparable.",
+      "El spa de clase mundial ofrece tratamientos únicos inspirados en las tradiciones prehispánicas de la región.",
+      "La gastronomía del resort combina recetas coloniales con técnicas contemporáneas de alta cocina.",
+      "Las albercas de agua templada, rodeadas de vegetación exuberante, invitan a la relajación total."
+    ],
+    "img/Haciendas/Hacienda San Gabriel de las Palmas": [
+      "Fachada principal de la hacienda colonial, perfectamente restaurada conservando su arquitectura original del siglo XVI.",
+      "Los corredores empedrados y arcos de cantera rosa caracterizan la arquitectura colonial de esta joya de Amacuzac.",
+      "El jardín central con su fuente histórica es el corazón de la hacienda, ideal para descansar bajo la sombra.",
+      "Las habitaciones del hotel boutique combinan el encanto colonial con todas las comodidades modernas.",
+      "Los alrededores de vegetación tropical hacen de este lugar un paraíso de paz y naturaleza."
+    ],
+    "img/Haciendas/Hacienda de Cortés": [
+      "Vista general de la imponente Hacienda de Cortés, construcción vinculada directamente a Hernán Cortés en el siglo XVI.",
+      "Los muros de piedra centenarios guardan siglos de historia entre sus sillares, testigos mudos del México colonial.",
+      "El acueducto histórico que abastecía de agua a la hacienda, obra de ingeniería colonial que aún se conserva.",
+      "Los arcos del casco principal enmarcan paisajes dignos de una pintura, donde la historia se respira en el aire.",
+      "El restaurante del complejo ofrece gastronomía morelense en un ambiente de auténtico sabor colonial.",
+      "Los jardines de la hacienda, espacio de celebraciones y eventos donde la historia cobra vida cada fin de semana."
+    ],
+    "img/Haciendas/Hotel Hacienda Vista Hermosa": [
+      "Panorámica aérea de la hacienda con sus impresionantes vistas hacia los volcanes y el valle de Morelos.",
+      "La fachada principal del hotel, un ejemplo magnífico de la arquitectura colonial morelense perfectamente restaurada.",
+      "Los jardines tropicales con piscina ofrecen el refugio perfecto bajo el sol eterno de la Ciudad de la Eterna Primavera.",
+      "El interior del casco histórico conserva elementos originales del siglo XVI, como vigas de madera y pisos de barro.",
+      "Salón de eventos con capacidad para bodas y celebraciones privadas con el telón de fondo de los volcanes.",
+      "La terraza panorámica es el lugar ideal para disfrutar el atardecer morelense con una copa en mano."
+    ],
+    "img/Haciendas/Ex Hacienda de Temixco": [
+      "Vista principal de la Ex Hacienda de Temixco, destino turístico icónico que combina historia y diversión acuática.",
+      "Las albercas y áreas acuáticas se integran armoniosamente con las construcciones coloniales del siglo XVI.",
+      "Los toboganes y atracciones acuáticas hacen de este lugar el favorito de familias de toda la república.",
+      "Los muros históricos de la hacienda enmarcan jardines tropicales que invitan a la exploración y el descanso.",
+      "Zona de descanso bajo la sombra de árboles centenarios, perfecta para recuperar fuerzas entre zambullidas."
+    ],
+    "img/Haciendas/Hacienda Amanalco S.A. de C.V": [
+      "Vista frontal de la majestuosa Hacienda Amanalco, con su imponente portada de cantera y jardines bien cuidados.",
+      "Los amplios salones coloniales de la hacienda son el escenario ideal para bodas y eventos de empresa.",
+      "Los corredores empedrados y arcadas de cantera rosa crean una atmósfera de elegancia colonial incomparable.",
+      "Los jardines exteriores, diseñados para grandes celebraciones, albergan hasta 500 invitados en perfecta armonía.",
+      "Detalle arquitectónico de la capilla colonial anexa a la hacienda, joya del patrimonio religioso de Morelos."
+    ],
+    "img/Balnearios/Las Estacas": [
+      "Aguas cristalinas del río Apatlaco en Las Estacas, declarado santuario de la biósfera por la UNESCO.",
+      "El río de manantial de Las Estacas mantiene una temperatura constante de 28°C durante todo el año.",
+      "Practicando snorkel en las aguas transparentes se pueden observar peces tropicales y la exuberante flora acuática.",
+      "Las amplias zonas de descanso rodeadas de vegetación subtropical invitan a disfrutar la naturaleza morelense.",
+      "El kayak en el río de Las Estacas es una de las actividades más populares en este paraíso natural."
+    ],
+    "img/Balnearios/Ex Hacienda de Temixco Waterpark": [
+      "Entrada principal del parque acuático de la Ex Hacienda de Temixco, uno de los más visitados de Morelos.",
+      "Los toboganes de alta velocidad son la atracción estrella del parque, con caídas que superan los 10 metros.",
+      "El río lento atraviesa toda la instalación rodeado de vegetación tropical, ideal para relajarse en flotador.",
+      "Las albercas principales tienen capacidad para cientos de visitantes bajo el sol eterno de Temixco."
+    ],
+    "img/Balnearios/Paraíso Aventura Las Huertas": [
+      "Vista general de las instalaciones de Paraíso Aventura Las Huertas, oasis de frescura en el corazón de Morelos.",
+      "Las albercas naturales de manantial tienen aguas cristalinas de temperatura agradable durante todo el año.",
+      "La exuberante vegetación subtropical que rodea el balneario crea un ambiente de paz y conexión con la naturaleza.",
+      "Zona de restaurantes y servicios donde degustar la gastronomía típica morelense después del baño.",
+      "Las áreas infantiles hacen de Las Huertas el destino familiar por excelencia de la región."
+    ],
+    "img/Balnearios/El Rollo Parque Acuático": [
+      "Panorámica del El Rollo, el parque acuático más grande de Morelos con sus impresionantes instalaciones.",
+      "La máquina de olas artificiales genera oleaje perfecto para surfistas y amantes de la natación.",
+      "Los toboganes extremos alcanzan velocidades de hasta 60 km/h, garantizando una experiencia de adrenalina total.",
+      "Las áreas familiares con chapoteaderos y toboganes suaves son perfectas para los más pequeños de la familia.",
+      "El espectáculo de delfines y shows acuáticos es una de las atracciones únicas de este parque temático."
+    ],
+    "img/Balnearios/AQUATIC PARK WATER EYE TEMIXCO": [
+      "Vista aérea del Aquatic Park Water Eye, parque familiar con instalaciones modernas en Acatlipa, Temixco.",
+      "Los toboganes espectaculares ofrecen descensos emocionantes para visitantes de todas las edades.",
+      "Las albercas de olas artificiales crean la ilusión de estar en la playa, a solo minutos de Cuernavaca.",
+      "El área de chapoteaderos para niños pequeños garantiza diversión segura bajo la supervisión de lifeguards.",
+      "Zona de restaurantes y snack bars con vista a las albercas, perfecta para reponer energías entre actividades."
+    ],
+    "img/Museos/Robert Brady Museum": [
+      "Fachada de la Casa de la Torre, residencia del artista estadounidense Robert Brady que hoy alberga el museo.",
+      "Sala principal con colección de arte internacional: pinturas, esculturas y arte popular de más de 30 países.",
+      "Pieza destacada de la colección: obra de Frida Kahlo que Brady adquirió directamente de la artista en los años 50.",
+      "El patio central del museo, diseñado por el propio Brady, combina arte precolombino con vegetación tropical.",
+      "Detalles de la colección de arte popular mexicano que Brady reunió durante sus décadas en Cuernavaca."
+    ],
+    "img/Museos/MMAPO Morelense Folk Art Museum": [
+      "Sala principal del MMAPO con exposición permanente de textiles tradicionales de las comunidades indígenas de Morelos.",
+      "Colección de máscaras ceremoniales utilizadas en danzas tradicionales de los pueblos originarios del estado.",
+      "Cerámica artesanal con técnicas prehispánicas que se siguen transmitiendo de generación en generación.",
+      "Taller de demostración donde artesanos locales comparten su conocimiento con visitantes de todo el mundo.",
+      "Exposición temporal de arte popular contemporáneo que reinterpreta las tradiciones visuales de Morelos."
+    ],
+    "img/Museos/Museo de Arte Sacro": [
+      "Interior de la Catedral de Cuernavaca donde se ubica el Museo de Arte Sacro, joya del barroco novohispano.",
+      "Colección de pinturas religiosas del siglo XVII y XVIII, obras de maestros de la escuela novohispana.",
+      "Esculturas coloniales de madera policromada que representan santos patronos de las parroquias de Morelos.",
+      "Documentos históricos de la evangelización colonial, incluyendo cartas y decretos del período virreinal.",
+      "Ornamentos litúrgicos de plata repujada y oro, ejemplo del esplendor artístico de la Iglesia colonial.",
+      "Vista del claustro del convento anexo a la Catedral, espacio de meditación y arte sacro desde el siglo XVI."
+    ],
+    "img/Museos/Museo de la Ciudad de Cuernavaca": [
+      "Fachada del edificio colonial del siglo XVI que alberga el Museo de la Ciudad, en pleno corazón histórico.",
+      "Sala de arqueología con piezas del período clásico tlahuica, cultura prehispánica que habitó el valle de Morelos.",
+      "Exposición fotográfica histórica que documenta la evolución urbana de Cuernavaca desde el siglo XIX.",
+      "Sala dedicada a la Revolución Mexicana y el papel protagónico de Morelos y Emiliano Zapata en ella.",
+      "Vista del patio central del edificio colonial, espacio de exposiciones temporales y eventos culturales.",
+      "Colección de documentos y mapas históricos que trazan la historia de Cuernavaca desde la Conquista."
+    ],
+    "img/Museos/Museo Universitario de Arte Indígena Contemporáneo, Cuernavaca": [
+      "Vista del histórico Palacio de Cortés, sede del Museo Regional, construcción del conquistador español en el siglo XVI.",
+      "Los murales de Diego Rivera en el Palacio de Cortés narran épicamente la historia de Morelos y México.",
+      "Sala de arqueología con piezas del período preclásico y clásico procedentes de excavaciones en todo el estado.",
+      "Colección etnográfica que documenta la vida cotidiana de las comunidades indígenas actuales de Morelos.",
+      "Exposición permanente sobre Emiliano Zapata y la Revolución Mexicana, con documentos y objetos originales."
+    ],
+    "img/Museos/Museo Cassa Gaia": [
+      "Fachada del Museo Cassa Gaia, espacio de arte contemporáneo en una de las casas históricas del centro de Cuernavaca.",
+      "Sala de exposición temporal con obras de artistas contemporáneos mexicanos e internacionales.",
+      "Instalación artística site-specific creada especialmente para los espacios coloniales del museo.",
+      "El jardín del museo, espacio de esculturas al aire libre rodeado de vegetación subtropical.",
+      "Detalle de obra de la colección permanente del museo, que dialoga entre lo prehispánico y lo contemporáneo.",
+      "Vista nocturna del museo durante una de sus inauguraciones de exposición, eventos que congregan a la comunidad cultural."
+    ]
+  };
+
+  const modal = document.getElementById('gallery-modal');
+  const closeBtn = document.getElementById('modal-close-btn');
+  const mainImg = document.getElementById('modal-main-img');
+  const thumbsContainer = document.getElementById('modal-thumbs');
+  const counter = document.getElementById('modal-counter');
+  const imgText = document.getElementById('modal-img-text');
+  const prevBtn = document.getElementById('modal-prev');
+  const nextBtn = document.getElementById('modal-next');
+
+  let currentImages = [];
+  let currentIdx = 0;
+  let currentFolder = '';
+
+  function buildImageList(folder, count) {
+    // Detect file extension based on folder
+    const imgs = [];
+    for (let i = 1; i <= count; i++) {
+      imgs.push(`${folder}/img${i}.webp`);
+    }
+    // Museo Cassa Gaia tiene nombres distintos
+    if (folder.includes('Museo Cassa Gaia')) {
+      return [
+        `${folder}/images (1).jpg`,
+        `${folder}/images (2).jpg`,
+        `${folder}/images (3).jpg`,
+        `${folder}/museo-cassa-gaia-cantinflas.jpg`,
+        `${folder}/museo-gaia-200621_6_475x273.jpeg`,
+        `${folder}/museo_2203_g_76436.png`
+      ];
+    }
+    return imgs;
+  }
+
+  function getText(folder, idx) {
+    const textos = TEXTOS[folder];
+    if (textos && textos[idx]) return textos[idx];
+    return 'Imagen ' + (idx + 1) + ' de ' + document.getElementById('modal-title').textContent + '.';
+  }
+
+  function showImage(idx) {
+    currentIdx = idx;
+    mainImg.style.opacity = '0';
+    setTimeout(() => {
+      mainImg.src = currentImages[idx];
+      mainImg.style.opacity = '1';
+    }, 200);
+
+    counter.textContent = (idx + 1) + ' / ' + currentImages.length;
+
+    // Update thumbs
+    document.querySelectorAll('.modal-thumb').forEach((t, i) => {
+      t.classList.toggle('active', i === idx);
+    });
+
+    // Update text with fade
+    imgText.classList.add('fade');
+    setTimeout(() => {
+      imgText.textContent = getText(currentFolder, idx);
+      imgText.classList.remove('fade');
+    }, 200);
+  }
+
+  function openModal(btn) {
+    const folder = btn.dataset.folder;
+    const count = parseInt(btn.dataset.count);
+    currentFolder = folder;
+    currentImages = buildImageList(folder, count);
+
+    document.getElementById('modal-title').textContent = btn.dataset.name;
+    document.getElementById('modal-tag').textContent = '✦ ' + btn.dataset.tag;
+    document.getElementById('modal-loc').textContent = btn.dataset.loc;
+
+    // Build thumbs
+    thumbsContainer.innerHTML = '';
+    currentImages.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.className = 'modal-thumb' + (i === 0 ? ' active' : '');
+      img.src = src;
+      img.alt = 'Imagen ' + (i + 1);
+      img.addEventListener('click', () => showImage(i));
+      thumbsContainer.appendChild(img);
+    });
+
+    showImage(0);
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    modal.scrollTop = 0;
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Events
+  document.querySelectorAll('.ver-mas-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openModal(btn);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') showImage((currentIdx - 1 + currentImages.length) % currentImages.length);
+    if (e.key === 'ArrowRight') showImage((currentIdx + 1) % currentImages.length);
+  });
+
+  prevBtn.addEventListener('click', () => showImage((currentIdx - 1 + currentImages.length) % currentImages.length));
+  nextBtn.addEventListener('click', () => showImage((currentIdx + 1) % currentImages.length));
+})();
+</script>
+
 </body>
 </html>
